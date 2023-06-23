@@ -1,8 +1,9 @@
 const express = require('express');
 const index = require('./routes/index');
+const dotenv = require('dotenv');
 
-const PORT = 3000;
-const HOST = '0.0.0.0';
+const PORT = process.env.PORT;
+const HOST = process.env.HOST;
 
 const app = express();
 

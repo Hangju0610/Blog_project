@@ -6,7 +6,10 @@ const HOST = '0.0.0.0';
 
 const app = express();
 
-app.get('/', index);
+//body-parser
+app.use(express.json());
+//index 미들웨어 연결
+app.use('/', index);
 
 app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+console.log(`동작해라! http://${HOST}:${PORT}`);

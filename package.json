@@ -1,0 +1,17 @@
+{
+    "dependencies": {
+        "express": "^4.18.2",
+        "mongoose": "^7.3.1",
+        "nodemon": "^2.0.22"
+    },
+    "name": "blog_project",
+    "description": "---\r ## 항해99_LV1\r - 게시판 CRUD 진행",
+    "version": "1.0.0",
+    "main": "app.js",
+    "scripts": {
+        "start": "nodemon app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "MIT"
+}

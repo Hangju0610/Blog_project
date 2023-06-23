@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Schema.Types.ObjectId;
-
+const post_id = mongoose.Schema.Types.ObjectId;
+// 게시판 Schema 작성하기
+// 고유 ID의 이름을 변경해야함.
+// why? Comment와 겹칠 수 있기 때문이죠.
 const postSchema = new mongoose.Schema({
-    postid: ObjectId,
+    post_id: post_id,
     user_id: {
         type: String,
         required: true,
@@ -25,4 +27,5 @@ const postSchema = new mongoose.Schema({
     },
 });
 
+//저장될 장소,
 module.exports = mongoose.model('posts', postSchema);

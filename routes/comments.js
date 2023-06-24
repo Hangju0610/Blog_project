@@ -28,27 +28,36 @@ router.get('/:postid/comments', async (req, res) => {
         const postid = req.params.postid;
         // console.log(req.params);
         // console.log(postid);
-        const commentlist = await Comments.find({ post_id: postid });
-        const data = { data: commentlist };
+        const findCommentsList = await Comments.find({ post_id: postid });
+        const Commentslist = [];
+        for (let key in findCommentsList) {
+            Commentslist[key] = {};
+
+            Commentslist[key]['commentid'] = findCommentsList[key]['_id'];
+            Commentslist[key]['user_id'] = findCommentsList[key]['user_id'];
+            Commentslist[key]['comment_content'] = findCommentsList[key]['comment_content'];
+            Commentslist[key]['created_at'] = findCommentsList[key]['created_at'];
+        }
+        const data = { data: Commentslist };
         res.status(200).json(data);
     } catch (err) {
         res.status(404).send('message:' + err.message);
     }
 });
 
-// 댓글 하나 가져오기
-router.get('/:postid/comments/:commentid', async (req, res) => {
-    try {
-        const postid = req.params.postid;
-        const commentid = req.params.commentid;
-        const comment = await Comments.find({ _id: commentid, post_id: postid });
-        const data = { data: comment };
+// 댓글 하나 가져오기 (알고보니 필요없었다.)
+// router.get('/:postid/comments/:commentid', async (req, res) => {
+//     try {
+//         const postid = req.params.postid;
+//         const commentid = req.params.commentid;
+//         const comment = await Comments.find({ _id: commentid, post_id: postid });
+//         const data = { data: comment };
 
-        res.status(200).json(data);
-    } catch (err) {
-        res.status(400).json({ message: '데이터 형식이 올바르지 않습니다.' });
-    }
-});
+//         res.status(200).json(data);
+//     } catch (err) {
+//         res.status(400).json({ message: '데이터 형식이 올바르지 않습니다.' });
+//     }
+// });
 
 // 댓글 수정하기
 router.put('/:postid/comments/:commentid', async (req, res) => {

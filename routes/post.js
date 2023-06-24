@@ -20,7 +20,19 @@ router.post('/', async (req, res) => {
 // 게시판 전체 가져오기
 router.get('/', async (req, res) => {
     try {
-        const postlist = await Posts.find({});
+        const findPosts = await Posts.find({});
+        // 빈 배열 생성 (비밀번호 및 내용 제거를 위한)
+        const postlist = [];
+        //
+        for (let key in findPosts) {
+            postlist[key] = {}; // 요소를 빈 객체로 초기화
+
+            postlist[key]['postid'] = findPosts[key]['_id'];
+            postlist[key]['user_id'] = findPosts[key]['user_id'];
+            postlist[key]['post_title'] = findPosts[key]['post_title'];
+            postlist[key]['created_at'] = findPosts[key]['created_at'];
+        }
+        console.log(postlist);
         const data = { data: postlist };
         res.status(200).json(data);
     } catch (err) {
@@ -32,7 +44,15 @@ router.get('/', async (req, res) => {
 router.get('/:postid', async (req, res) => {
     try {
         const postid = req.params.postid;
-        const post = await Posts.find({ _id: postid });
+        const findpost = await Posts.find({ _id: postid });
+        // 비밀번호 없게 새로운 객체 생성하기
+        const post = {
+            postid: findpost[0]['_id'],
+            user_id: findpost[0]['user_id'],
+            post_title: findpost[0]['post_title'],
+            post_content: findpost[0]['post_content'],
+            created_at: findpost[0]['created_at'],
+        };
         const data = { data: post };
 
         res.status(200).json(data);

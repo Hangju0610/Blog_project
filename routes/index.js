@@ -7,10 +7,11 @@ const router = express.Router();
 router.get('/', (req, res) => {
     res.send("HJ's Blog!");
 });
-//posts router 연결
-router.use('/posts', postrouter);
+//posts router 연결 후 commentrouter 연결
+router.use('/posts', postrouter, commentrouter);
 
-//comments router 연결
-router.use('/posts/:postid/comments', commentrouter);
+// //comments router 연결
+// 왜 이렇게 하면 안되는 지는 모르겠지만, 이렇게 하면 :postid를 req.params로 받아오지 못한다.
+// router.use('/posts/:postid/comments', commentrouter);
 
 module.exports = router;

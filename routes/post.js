@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
         const findPosts = await Posts.find({});
         // 빈 배열 생성 (비밀번호 및 내용 제거를 위한)
         const postlist = [];
-        //
+        // findPosts 반복문 진행(postlist에 내용 넣기)
         for (let key in findPosts) {
             postlist[key] = {}; // 요소를 빈 객체로 초기화
 

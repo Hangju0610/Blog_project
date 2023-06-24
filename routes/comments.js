@@ -29,7 +29,9 @@ router.get('/:postid/comments', async (req, res) => {
         // console.log(req.params);
         // console.log(postid);
         const findCommentsList = await Comments.find({ post_id: postid });
+        // 빈 배열 생성
         const Commentslist = [];
+        // find로 가져온 배열 반복문 실행하기
         for (let key in findCommentsList) {
             Commentslist[key] = {};
 

@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
 
         // 해당 유저에 대한 토큰을 발급한다.
         const tokenUser = await jwt.sign({ userId: findUser.userId }, process.env.SECRET_KEY, {
-            expiresIn: '5m',
+            expiresIn: '1h',
         });
 
         // 발급된 토큰을 쿠키에 넣는다.

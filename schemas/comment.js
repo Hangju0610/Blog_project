@@ -10,7 +10,7 @@ const commentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    userPassword: {
+    nickname: {
         type: String,
         required: true,
     },
@@ -19,6 +19,10 @@ const commentSchema = new mongoose.Schema({
         required: true,
     },
     createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    updatedAt: {
         type: Date,
         default: Date.now,
     },

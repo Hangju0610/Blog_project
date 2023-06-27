@@ -18,6 +18,7 @@ app.use(morgan("dev"));
 
 //body-parser
 app.use(express.json());
+app.use(express.urlencoded({ extended: false })); // urlencoded : 폼 데이터를 받을 수 있는 기능
 app.use(cookieParser());
 //index 미들웨어 연결
 app.use("/api", index);

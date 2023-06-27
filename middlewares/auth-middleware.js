@@ -1,5 +1,21 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-const auth = async (req, res, next) => {};
+const jwtValidation = async (req, res) => {
+  const { Authorization } = req.cookies;
 
-module.exports = auth;
+  console.log(Authorization);
+
+  const jwtVerify = jwt.verify(
+    Authorization,
+    process.env.SECRET_KEY,
+    (error, decode) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+      console.log(decode);
+    }
+  );
+};
+
+module.exports = {};

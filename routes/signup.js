@@ -10,17 +10,23 @@ router.post('/', (req, res) => {
 
         // ERROR 처리
         if ((nickname = existUser.nickname)) {
-            res.status(412).json({ message: '중복된 닉네임입니다.' });
+            res.status(412).json({ errorMessage: '중복된 닉네임입니다.' });
         } else if (password !== confirmPassword) {
-            res.status(412).json({ message: '비밀번호가 일치하지 않습니다.' });
+            res.status(412).json({ errorMessage: '비밀번호가 일치하지 않습니다.' });
         } else if (nickname.length < 3) {
-            res.status(412).json({ message: '닉네임의 형식이 일치하지 않습니다.' });
+            res.status(412).json({ errorMessage: '닉네임의 형식이 일치하지 않습니다.' });
         } else if (password.length < 4) {
-            res.status(412).json({ message: '비밀번호 형식이 일치하지 않습니다.' });
+            res.status(412).json({ errorMessage: '비밀번호 형식이 일치하지 않습니다.' });
         } else if (regexp.test(password)) {
-            res.status(412).json({ message: '패스워드에 닉네임이 포함되어 있습니다.' });
+            res.status(412).json({ errorMessage: '패스워드에 닉네임이 포함되어 있습니다.' });
+        } else {
+            const newUser = new User({ nickname, password });
+            newUser.save();
+            res.status(201).json({ message: '회원 가입에 성공하였습니다.' });
         }
-    } catch (err) {}
+    } catch (err) {
+        res.status(400).json({ errorMessage: '요청한 데이터 형식이 올바르지 않습니다.' });
+    }
 });
 
 module.exports = router;

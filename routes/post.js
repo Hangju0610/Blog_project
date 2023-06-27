@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Posts = require('../schemas/post');
+const authMiddleware = require('../middlewares/auth-middleware');
 
 // 게시판 생성하기
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
     try {
         const { userId, userPassword, postTitle, postContent } = req.body;
 
@@ -60,7 +61,7 @@ router.get('/:postId', async (req, res) => {
 });
 
 // 게시판 수정하기
-router.put('/:postId', async (req, res) => {
+router.put('/:postId', authMiddleware, async (req, res) => {
     try {
         const { postId } = req.params;
         const { userPassword, postTitle, postContent } = req.body;
@@ -81,7 +82,7 @@ router.put('/:postId', async (req, res) => {
 });
 
 // 게시판 지우기
-router.delete('/:postId', async (req, res) => {
+router.delete('/:postId', authMiddleware, async (req, res) => {
     try {
         const { postId } = req.params;
         const { userPassword } = req.body;

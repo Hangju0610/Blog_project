@@ -2,23 +2,23 @@ const mongoose = require('mongoose');
 
 // 게시글 Schema 작성
 const postSchema = new mongoose.Schema({
-    user_id: {
+    userId: {
         type: String,
         required: true,
     },
-    user_password: {
+    userPassword: {
         type: String,
         required: true,
     },
-    post_title: {
+    postTitle: {
         type: String,
         required: true,
     },
-    post_content: {
+    postContent: {
         type: String,
         required: true,
     },
-    created_at: {
+    createdAt: {
         type: Date,
         default: Date.now,
     },

@@ -5,11 +5,13 @@ const Posts = require('../schemas/post');
 // 게시판 생성하기
 router.post('/', async (req, res) => {
     try {
+        const { userId, userPassword, postTitle, postContent } = req.body;
+
         await Posts.create({
-            user_id: req.body.user_id,
-            user_password: req.body.user_password,
-            post_title: req.body.post_title,
-            post_content: req.body.post_content,
+            userId,
+            userPassword,
+            postTitle,
+            postContent,
         });
         res.status(201).json({ message: '게시글을 생성하였습니다.' });
     } catch (err) {
@@ -21,19 +23,15 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const findPosts = await Posts.find({});
-        // 빈 배열 생성 (비밀번호 및 내용 제거를 위한)
-        const postlist = [];
-        // findPosts 반복문 진행(postlist에 내용 넣기)
-        for (let key in findPosts) {
-            postlist[key] = {}; // 요소를 빈 객체로 초기화
-
-            postlist[key]['postid'] = findPosts[key]['_id'];
-            postlist[key]['user_id'] = findPosts[key]['user_id'];
-            postlist[key]['post_title'] = findPosts[key]['post_title'];
-            postlist[key]['created_at'] = findPosts[key]['created_at'];
-        }
-        console.log(postlist);
-        const data = { data: postlist };
+        const postList = findPosts.map((post) => {
+            return {
+                postId: post['_id'],
+                userId: post['userId'],
+                postTitle: post['postTitle'],
+                createdAt: post['createdAt'],
+            };
+        });
+        const data = { data: postList };
         res.status(200).json(data);
     } catch (err) {
         res.status(404).send('message:' + err.message);
@@ -41,17 +39,17 @@ router.get('/', async (req, res) => {
 });
 
 // 게시판 하나 가져오기
-router.get('/:postid', async (req, res) => {
+router.get('/:postId', async (req, res) => {
     try {
-        const postid = req.params.postid;
-        const findpost = await Posts.find({ _id: postid });
+        const { postId } = req.params;
+        const findPost = await Posts.find({ _id: postId });
         // 비밀번호 없게 새로운 객체 생성하기
         const post = {
-            postid: findpost[0]['_id'],
-            user_id: findpost[0]['user_id'],
-            post_title: findpost[0]['post_title'],
-            post_content: findpost[0]['post_content'],
-            created_at: findpost[0]['created_at'],
+            postId: findPost[0]['_id'],
+            userId: findPost[0]['userId'],
+            postTitle: findPost[0]['postTitle'],
+            postContent: findPost[0]['postContent'],
+            createdAt: findPost[0]['createdAt'],
         };
         const data = { data: post };
 
@@ -62,21 +60,19 @@ router.get('/:postid', async (req, res) => {
 });
 
 // 게시판 수정하기
-router.put('/:postid', async (req, res) => {
+router.put('/:postId', async (req, res) => {
     try {
-        const postid = req.params.postid;
-        const body_password = req.body.user_password;
-        const body_title = req.body.post_title;
-        const body_content = req.body.post_content;
+        const { postId } = req.params;
+        const { userPassword, postTitle, postContent } = req.body;
 
-        const post = await Posts.find({ _id: postid });
+        const post = await Posts.find({ _id: postId });
 
-        if (body_password !== post[0]['user_password']) {
+        if (userPassword !== post[0]['userPassword']) {
             res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' });
-        } else if (!body_title || !body_content) {
+        } else if (!postTitle || !postContent) {
             res.status(400).json({ message: '데이터 형식이 올바르지 않습니다.' });
         } else {
-            await Posts.updateOne({ _id: postid }, { $set: { post_title: body_title, post_content: body_content } });
+            await Posts.updateOne({ _id: postId }, { $set: { postTitle, postContent } });
             res.status(201).json({ message: '게시글을 수정하였습니다.' });
         }
     } catch (err) {
@@ -85,16 +81,17 @@ router.put('/:postid', async (req, res) => {
 });
 
 // 게시판 지우기
-router.delete('/:postid', async (req, res) => {
+router.delete('/:postId', async (req, res) => {
     try {
-        const postid = req.params.postid;
-        const body_password = req.body.user_password;
-        const post = await Posts.find({ _id: postid });
+        const { postId } = req.params;
+        const { userPassword } = req.body;
 
-        if (body_password !== post[0]['user_password']) {
+        const post = await Posts.find({ _id: postId });
+
+        if (userPassword !== post[0]['userPassword']) {
             res.status(400).json({ message: '데이터 형식이 올바르지 않습니다.' });
         } else {
-            await Posts.deleteOne({ _id: postid });
+            await Posts.deleteOne({ _id: postId });
             res.status(201).json({ message: '게시글을 삭제되었습니다.' });
         }
     } catch (err) {

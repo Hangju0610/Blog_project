@@ -2,23 +2,23 @@ const mongoose = require('mongoose');
 
 // comment Schema 작성
 const commentSchema = new mongoose.Schema({
-    post_id: {
+    postId: {
         type: String,
         required: true,
     },
-    user_id: {
+    userId: {
         type: String,
         required: true,
     },
-    user_password: {
+    userPassword: {
         type: String,
         required: true,
     },
-    comment_content: {
+    commentContent: {
         type: String,
         required: true,
     },
-    created_at: {
+    createdAt: {
         type: Date,
         default: Date.now,
     },

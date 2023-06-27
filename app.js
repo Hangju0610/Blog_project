@@ -7,7 +7,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const PORT = process.env.PORT;
-const HOST = process.env.HOST;
 
 connect();
 const app = express();
@@ -18,5 +17,5 @@ app.use(express.json());
 //index 미들웨어 연결
 app.use('/', index);
 
-app.listen(PORT, HOST);
-console.log(`동작해라! http://${HOST}:${PORT}`);
+app.listen(PORT);
+console.log(`동작해라! http://${PORT}`);

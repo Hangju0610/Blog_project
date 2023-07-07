@@ -7,8 +7,8 @@ class signupRepository {
     return existUser;
   };
 
-  signup = async (nickname, password) => {
-    const user = await new User({ nickname, password });
+  signup = async (nickname, hashedPassword) => {
+    const user = await new User({ nickname, password: hashedPassword });
     user.save();
     return user;
   };

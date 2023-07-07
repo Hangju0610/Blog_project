@@ -8,8 +8,11 @@ class signupService {
     return user;
   };
 
-  signup = async (nickname, password) => {
-    const signData = await this.signupRepository.signup(nickname, password);
+  signup = async (nickname, hashedPassword) => {
+    const signData = await this.signupRepository.signup(
+      nickname,
+      hashedPassword
+    );
 
     return signData;
   };

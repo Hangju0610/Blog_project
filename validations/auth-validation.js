@@ -12,6 +12,16 @@ const signupValidation = joi.object({
   }),
 });
 
+const loginValidation = joi.object({
+  nickname: joi.string().not("").required().messages({
+    "any.invalid": "닉네임을 확인해주세요.",
+  }),
+  password: joi.string().not("").required().messages({
+    "any.invalid": "비밀번호를 확인해주세요.",
+  }),
+});
+
 module.exports = {
   signupValidation,
+  loginValidation,
 };

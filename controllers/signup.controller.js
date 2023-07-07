@@ -27,7 +27,7 @@ class signupController {
     } catch (err) {
       console.error(err);
       if (err.isJoi) {
-        return res.status(412).json({ error: err.details[0].message });
+        return res.status(412).json({ error: err.message });
       }
       return res.status(500).json({ error: "서버 에러" });
     }

@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 // 에러가 발생할 경우 .catch로 에러 형성
 const connect = async () => {
   mongoose
-    .connect(process.env.DB_URL, {
-      dbName: "Blog",
+    .connect(process.env.MONGO_URL, {
+      dbName: "hanghae-lv2",
     })
     .then(() => console.log(`망고찡 연결완료`))
     .catch((err) => console.log(err));

@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken");
 const LoginService = require("../services/login.service");
 const { loginValidation } = require("../validations/auth-validation");
 
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 class LoginController {
@@ -25,7 +25,6 @@ class LoginController {
       const token = jwt.sign({ nickname }, process.env.SECRET_KEY, {
         expiresIn: "1h",
       });
-
       res.cookie("Authorization", `Bearer ${token}`);
 
       return res.status(200).json({ token: token });

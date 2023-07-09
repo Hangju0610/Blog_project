@@ -5,6 +5,7 @@ class LoginService {
 
   findUser = async (nickname) => {
     const user = await this.loginRepository.findUser(nickname);
+
     return user;
   };
 }

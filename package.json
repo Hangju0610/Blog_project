@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "bcrypt": "^5.1.0",
+        "bcrypt": "^5.0.1",
         "cookie-parser": "^1.4.6",
         "dotenv": "^16.3.1",
         "express": "^4.18.2",
@@ -8,7 +8,7 @@
         "jsonwebtoken": "^9.0.1",
         "mongoose": "^7.3.1",
         "morgan": "^1.10.0",
-        "nodemon": "^2.0.22"
+        "nodemon": "^1.14.9"
     },
     "name": "blog_project",
     "description": "---\r ## 항해99_LV1\r - 게시판 CRUD 진행",
